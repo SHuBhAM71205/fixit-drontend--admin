@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../css/Setting.css';
+import '../css/Seeting.css';
 
 export default function Settings() {
   const [location, setLocation] = useState('');

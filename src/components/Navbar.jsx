@@ -13,6 +13,7 @@ const Navbar = ({ userName }) => {
     const buttonMappings = [
         { id: "b1", text: "Stastic", icon: <i className="fas fa-line-chart"></i>,path:'/' },
         { id: "b5", text: "Request", icon: <i className="fas fa-check-square"></i>,path:'/Request' },
+        { id: "b4", text: "TaskmasterApplication", icon: <i className="fas fa-solid fa-user-tie"></i>,path:'/TaskmasterApplications' },
         { id: "b2", text: "User", icon: <i className="fas fa-solid fa-user"></i>,path:'/User' },
         { id: "b3", text: "Seeting", icon: <i className="fas fa-gear"></i>,path:'/Seeting' }
     ];

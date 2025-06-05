@@ -11,6 +11,7 @@ import Header from './components/HeaderCom'
 import LoginSignupPage from './components/LoginSignupPage'
 import Currpgcontext from './context/currpgcontext'
 import Currpgcontextprovider from './context/currpgcontextprovider'
+import TaskmasterApplications from './components/TaskmaterApplic'
 function App() {
 
   return (
@@ -29,7 +30,7 @@ function App() {
               <Route path="/Request" element={
                 <Request />
               } />
-              
+              <Route path="/TaskmasterApplications" element={<TaskmasterApplications/>}/>
               <Route path="/User" element={
                 <User />
               } />
