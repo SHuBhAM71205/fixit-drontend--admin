@@ -1,53 +1,65 @@
 import React,{useState} from 'react'
 import './AuthForm.css'
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../context/Logincontextprovider';
 const URL=import.meta.env.VITE_backend;
 
-export default function AuthForm() 
+export default function AuthForm({ onLoginSuccess }) 
 { 
+  const { login } = useAuth(); 
   const navig=useNavigate();
   const [isLogin, setIsLogin] = useState(true);
+  const [allow,setallow]=useState(false)
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    email: form.email.value,
+    password: form.password.value,
+    ...(isLogin ? {} : { name: form.name.value })
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const data = {
-      email: form.email.value,
-      password: form.password.value,
-      ...(isLogin ? {} : { name: form.name.value})
-    };
+  if (!isLogin && !form.terms.checked) {
+    alert('You must accept the terms and conditions.');
+    return;
+  }
 
-    if (!isLogin && !form.terms.value) {
-      alert('You must accept the terms and conditions.');
+  try {
+    const res = await fetch(`${URL}/api/auth/${isLogin ? 'login' : 'createUser'}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const resData = await res.json();
+
+    if (!res.ok) {
+      // Handle failed login or signup
+      alert(resData.message || "Wrong credentials");
       return;
     }
 
-
-    fetch(`${URL}api/auth/${isLogin?'login':'createUser'}`,{
-      method:'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify(data)
-    }).then(response=>{
-      localStorage.setItem('auth-token',response.headers.get('Auth-Token'));
-    }).catch(error=>{
-      console.log(error)
-    })
+    // If successful login
     if (isLogin) {
-      setTimeout(()=>{
-          navig("/")
-      },1000)
+      if (resData.user?.role?.name === 'admin') {
+        localStorage.setItem('auth-token', res.headers.get('Auth-Token'));
+        login(); // from context
+        navig('/'); // Navigate after login
+      } else {
+        alert("Access denied: only admin can log in.");
+      }
+    } else {
+      alert("Signup successful! Please log in.");
+      setIsLogin(true); // Switch to login after signup
     }
-    else{
-      setTimeout(()=>{
-        setIsLogin(true);
-      },1000)
-    }
-        
-    alert(`${isLogin ? 'Logging in' : 'Signing up'} with data:\n${JSON.stringify(data, null, 2)}`);
-    // You can replace the alert with your API call logic here
-  };
+  } catch (error) {
+    console.error(error);
+    alert("Server error. Please try again later.");
+  }
+};
+
 
   return (
     <div className="container-form">
