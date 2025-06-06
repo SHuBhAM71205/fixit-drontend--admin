@@ -2,9 +2,15 @@
 *{
   margin: 0;
   padding: 0;
+
 }
 .container-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width:100vw;
+  min-height: 100vh;
+  overflow: scroll;
   background-color: #ccc;
 }
 
@@ -16,11 +22,10 @@
 
 .toggle-buttons button {
   flex: 1;
-  
   padding: 12px;
   border-bottom: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.3rem;
   cursor: pointer;
   background: #f0f0f0;
   transition: background 0.3s ease;
@@ -34,8 +39,6 @@
 
 .form-box {
   display: flex;
-
-  margin: auto;
   width: 40vw;
   min-height: 70vh;
   flex-direction: column;
@@ -99,7 +102,7 @@
 
 
 ::-webkit-scrollbar{
-    display: block;
+    display:none;
     position: absolute;
     right:0;
     top:0px;

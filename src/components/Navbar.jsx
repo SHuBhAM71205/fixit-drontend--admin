@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../css/navbar.css';
 import manIcon from '/man-icon-illustration-vector.jpg'; // Ensure this path is correct
 import Currpgcontext from '../context/currpgcontext';
+import { useAuth } from '../context/Logincontextprovider';
 
 const Navbar = ({ userName }) => {
+    const{logout}=useAuth();
     const leftNavRef = useRef(null);
     const [isSmall, setIsSmall] = useState(false);
     const navigate = useNavigate();
@@ -50,6 +52,7 @@ const Navbar = ({ userName }) => {
     };
 
     const handleLogout = () => {
+        logout();
         navigate('/fixit-user?lgot=true'); // Adjust route if needed
     };
         return (
