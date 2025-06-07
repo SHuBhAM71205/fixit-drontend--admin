@@ -17,12 +17,12 @@ export default function App2() {
   return (
 
     <Currpgcontextprovider>
-    <div className='flex-row homepg-body'>
+    <div className='flex h-screen bg-gray-800'>
       
         <Navbar />
-        <div className="homepg-main-content flex-col">
+        <div className=" h-screen flex-col flex-1 overflow-auto">
           <Header/>
-          <div className="content">
+          <div className="flex">
             <Routes>
               <Route path="/" element={
                 <Stastic />

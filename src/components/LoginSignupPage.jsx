@@ -52,7 +52,7 @@ export default function AuthForm({ onLoginSuccess }) {
           return;
         }
 
-        if (resData.user?.role?.name === 'taskmaster' || resData.user?.role?.name === 'user') {
+        if (resData.user?.role?.name === 'admin' || resData.user?.role?.name === 'user') {
           localStorage.setItem('auth-token', res.headers.get('Auth-Token'));
           login();
           navigate('/');
@@ -65,7 +65,7 @@ export default function AuthForm({ onLoginSuccess }) {
           lname: form.lname.value,
           gender: form.gender.value,
           area: form.area.value,
-          role: '683ff5d92cba5619ab8e0823',
+          role: '683ff5d02cba5619ab8e0821',
           email: form.email.value,
           password: form.password.value,
           contact: form.contact.value

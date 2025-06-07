@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+// import './App.css';
 import App2 from './App2';
 import LoginSignupPage from './components/LoginSignupPage';
 import { AuthProvider, useAuth } from './context/Logincontextprovider';

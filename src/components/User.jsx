@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../css/User.css';
+// import '../css/User.css';
 
 const backend = import.meta.env.VITE_backend;
 
@@ -91,55 +91,85 @@ export default function User() {
   if (errorFilters) return <div>Error loading filters: {errorFilters}</div>;
 
   return (
-    <div className="user-track">
-      <h2>User Directory</h2>
+    <div className='flex-col w-full'>
+      <div className="flex flex-col justify-center items-center  mt-10 md:flex-row gap-4 md:items-center mb-6">
 
-      <div className="user-controls">
         <input
           type="text"
           placeholder="Search by name or email"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
+          className="px-4 py-2 border border-gray-100 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 w-full md:w-1/3 bg-gray-400"
         />
 
-        <select value={roleFilter} onChange={e => setRoleFilter(e.target.value)}>
+        <select
+          value={roleFilter}
+          onChange={e => setRoleFilter(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 w-full md:w-1/4 bg-gray-400"
+        >
           <option value="">All Roles</option>
           {roles.map(role => (
             <option key={role._id} value={role.name}>{role.name}</option>
           ))}
         </select>
 
-        <select value={placeFilter} onChange={e => setPlaceFilter(e.target.value)}>
+        <select
+          value={placeFilter}
+          onChange={e => setPlaceFilter(e.target.value)}
+          className="px-4 py-2 border border-gray-300 bg-gray-400 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 w-full md:w-1/4"
+        >
           <option value="">All Areas</option>
           {places.map(place => (
             <option key={place._id} value={place.name}>{place.name}</option>
           ))}
         </select>
+
       </div>
 
-      <ul className="user-list">
+
+      <div className="grid grid-cols-1 flex-1justify-items-center items-center sm:grid-cols-2 lg:grid-cols-3 gap-10 px-6 py-6">
         {filteredUsers.length > 0 ? (
           filteredUsers.map(user => (
-            <li key={user._id} className="user-card">
-              <img
-                src={user.image || '/man-icon-illustration-vector.jpg'}
-                alt={`${user.fname} ${user.lname}`}
-                className="user-image"
-              />
-              <div className="user-info">
-                <p className="user-name">{user.fname} {user.lname}</p>
-                <p className="user-role">Role: {user.role?.name || 'N/A'}</p>
-                <p className="user-place">Place: {user.area?.name || 'N/A'}</p>
-                <p className="user-email">Email: {user.email}</p>
-                <p className="user-status">Status: {user.status || 'N/A'}</p>
+            <div
+              key={user._id}
+              className={`bg-gray-300 flex-col lg:flex rounded-xl shadow-xl p-5 w-full space-y-4 border-l-4 border-indigo-500 hover:shadow-lg transition`}
+            >
+              <div className="flex flex-1 flex-col sm:flex-row space-x-4">
+                <img
+                  className="w-12 h-12 border-2 border-indigo-300 rounded-full"
+                  src={user.image || '/man-icon-illustration-vector.jpg'}
+                  alt={`${user.fname} ${user.lname}`}
+                />
+                <div className="flex-wrap">
+                  <p className="text-sm text-gray-800 font-semibold">
+                    Name: {user.fname} {user.lname}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Role: {user.role?.name || 'N/A'}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Place: {user.area?.name || 'N/A'}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Email: {user.email}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Status: {user.status || 'N/A'}
+                  </p>
+                </div>
               </div>
-            </li>
+
+              <div className='flex justify-center gap-2'>
+                <button className='bg-green-300 hover:bg-green-500 p-1.5 rounded-sm text-xs'>Upgrade Role</button>
+                <button className='bg-blue-300 hover:bg-blue-500 p-1.5 rounded-sm text-xs'>Downgrade Role</button>
+                <button className='bg-red-300  hover:bg-red-500 p-1.5 rounded-sm text-xs'>Remove User</button>
+              </div>
+            </div>
           ))
         ) : (
           <div className="no-user">No users found.</div>
         )}
-      </ul>
+      </div>
     </div>
   );
 }
-
